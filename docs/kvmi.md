@@ -37,12 +37,12 @@ for minimum overhead.
 ## v1
 
 - Publication: **16th June 2017**
-- [Mailing list](https://www.spinics.net/lists/kvm/msg151508.html)
+- [Mailing list](https://lore.kernel.org/kvm/20170616134348.17725-1-alazar@bitdefender.com/)
 
 ## v2
 
 - Publication: **7th July 2017**
-- [Mailing list](https://www.spinics.net/lists/kvm/msg152567.html)
+- [Mailing list](https://lore.kernel.org/kvm/20170707143416.11195-1-alazar@bitdefender.com/)
 
 **Changes since** `v1`
 
@@ -109,7 +109,7 @@ for minimum overhead.
 ## v5
 
 - Publication: **20th December 2018**
-- [Mailing list](https://www.spinics.net/lists/kvm/msg179441.html)
+- [Mailing list](https://web.archive.org/web/20231115101621/https://www.spinics.net/lists/kvm/msg179441.html)
 - Kernel: `4.20.0-rc7`
 
 **Changes since** `v4`:
