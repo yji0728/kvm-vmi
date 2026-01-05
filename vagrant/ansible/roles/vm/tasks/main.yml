@@ -14,6 +14,9 @@
 - name: setup libvirt
   include_tasks: libvirt.yml
 
+- name: setup analysis network
+  include_tasks: analysis_network.yml
+
 - name: Create temporary directory
   ansible.builtin.tempfile:
     state: directory
@@ -114,3 +117,15 @@
 
 - name: refresh libvirt pool
   command: virsh -c qemu:///system pool-refresh default
+
+- name: copy malware analysis setup script
+  copy:
+    src: files/setup_malware_analysis.sh
+    dest: /home/vagrant/setup_malware_analysis.sh
+    mode: '0755'
+    owner: vagrant
+    group: vagrant
+
+- name: run malware analysis setup script
+  command: /home/vagrant/setup_malware_analysis.sh
+  become: false

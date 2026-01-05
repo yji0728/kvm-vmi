@@ -20,6 +20,13 @@
         - git
         - htop
         - vim
+        - python3-pip
+        - tcpdump
+        - wireshark
+        - binutils
+        - gdb
+        - strace
+        - ltrace
 
   roles:
     - kvm
