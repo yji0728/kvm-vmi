@@ -21,14 +21,26 @@
       </network>
     mode: '0644'
 
+- name: check if analysis network already defined
+  command: virsh -c qemu:///system net-info analysis
+  register: analysis_network_check
+  failed_when: false
+  changed_when: false
+
 - name: define analysis network
   command: virsh -c qemu:///system net-define /etc/libvirt/qemu/networks/analysis.xml
-  ignore_errors: yes
+  when: analysis_network_check.rc != 0
 
 - name: set analysis network as autostart
   command: virsh -c qemu:///system net-autostart analysis
-  ignore_errors: yes
+  when: analysis_network_check.rc != 0
 
-- name: start analysis network
+- name: check if analysis network is active
+  command: virsh -c qemu:///system net-info analysis
+  register: analysis_network_status
+  changed_when: false
+
+- name: start analysis network if not active
   command: virsh -c qemu:///system net-start analysis
-  ignore_errors: yes
+  when: "'active' not in analysis_network_status.stdout.lower()"
+  failed_when: false
