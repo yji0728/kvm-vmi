@@ -22,6 +22,9 @@ KVM-based Virtual Machine Instrospection.
 
 - [Overview](#overview)
 - [Installation](#installation)
+  - [For Malware Analysis (VMware + Windows 10)](#for-malware-analysis-vmware--windows-10)
+  - [General Installation](#general-installation)
+- [Optimizations for Malware Analysis](#optimizations-for-malware-analysis)
 - [Presentations](#presentations)
 - [References](#references)
 - [Maintainers](#maintainers)
@@ -55,7 +58,51 @@ in this repository:
 
 ## Installation
 
+### For Malware Analysis (VMware + Windows 10)
+
+This repository has been optimized for malware analysis on VMware with Windows 10. See:
+- **[Quick Start Guide](QUICK_START.md)** - 빠른 시작 가이드 (한국어/English)
+- **[Malware Analysis Setup](MALWARE_ANALYSIS_SETUP.md)** - Detailed English documentation
+- **[악성코드 분석 가이드](악성코드_분석_설정_가이드.md)** - 한국어 상세 가이드
+- **[Configuration Reference](CONFIGURATION.md)** - System configuration details
+
+**Quick Setup:**
+```bash
+cd vagrant
+vagrant up --provider=vmware_desktop
+```
+
+### General Installation
+
 Follow the [Setup guide](https://kvm-vmi.github.io/kvm-vmi/master/setup.html)
+
+## Optimizations for Malware Analysis
+
+This fork has been optimized for malware analysis with the following enhancements:
+
+### Infrastructure
+- **VMware Desktop Provider**: Full support with 8GB RAM and nested virtualization
+- **Ubuntu 22.04**: Updated base system for better compatibility
+- **Storage Path**: `/home/sec` for centralized malware analysis workspace
+
+### Windows 10 Configuration
+- **Memory**: 4GB RAM for better performance during malware execution
+- **vCPUs**: 2 cores for responsive analysis
+- **Disk**: 100GB for extensive sample storage
+- **Format**: qcow2 with snapshot support for clean state recovery
+
+### Analysis Tools
+- Network monitoring tools (tcpdump, wireshark)
+- Debugging tools (gdb, strace, ltrace)
+- Isolated network for safe malware execution
+- Automated environment setup scripts
+- Pre-configured aliases for common operations
+
+### Workflow Enhancements
+- Quick snapshot creation and restoration
+- Network traffic capture automation
+- Organized directory structure for samples and reports
+- Comprehensive bilingual documentation (English/Korean)
 
 ## Presentations
 
