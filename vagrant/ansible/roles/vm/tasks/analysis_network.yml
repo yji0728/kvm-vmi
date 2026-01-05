@@ -1,0 +1,46 @@
+---
+# Additional network configuration for malware analysis isolation
+- name: ensure analysis network directory exists
+  file:
+    path: /etc/libvirt/qemu/networks
+    state: directory
+
+- name: create isolated analysis network
+  copy:
+    dest: /etc/libvirt/qemu/networks/analysis.xml
+    content: |
+      <network>
+        <name>analysis</name>
+        <bridge name='virbr1' stp='on' delay='0'/>
+        <domain name='analysis.local'/>
+        <ip address='192.168.100.1' netmask='255.255.255.0'>
+          <dhcp>
+            <range start='192.168.100.2' end='192.168.100.254'/>
+          </dhcp>
+        </ip>
+      </network>
+    mode: '0644'
+
+- name: check if analysis network already defined
+  command: virsh -c qemu:///system net-info analysis
+  register: analysis_network_check
+  failed_when: false
+  changed_when: false
+
+- name: define analysis network
+  command: virsh -c qemu:///system net-define /etc/libvirt/qemu/networks/analysis.xml
+  when: analysis_network_check.rc != 0
+
+- name: set analysis network as autostart
+  command: virsh -c qemu:///system net-autostart analysis
+  when: analysis_network_check.rc != 0
+
+- name: check if analysis network is active
+  command: virsh -c qemu:///system net-info analysis
+  register: analysis_network_status
+  changed_when: false
+
+- name: start analysis network if not active
+  command: virsh -c qemu:///system net-start analysis
+  when: "'active' not in analysis_network_status.stdout.lower()"
+  failed_when: false

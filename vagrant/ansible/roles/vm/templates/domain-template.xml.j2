@@ -1,7 +1,7 @@
 <domain type='kvm' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
     <name>{{ item.name }}</name>
     <memory unit='MiB'>{{ item.ram | default('1024') }}</memory>
-  <vcpu placement='static'>1</vcpu>
+  <vcpu placement='static'>2</vcpu>
   <qemu:commandline>
       <qemu:arg value='-chardev'/>
       <qemu:arg value='socket,path=/tmp/introspector,id=chardev0,reconnect=3'/>
@@ -37,7 +37,7 @@
     <emulator>/usr/local/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
-            <source file='/data/vms/{{ vms_image_filename }}'/>
+            <source file='/home/sec/vms/{{ vms_image_filename }}'/>
       <target dev='hda' bus='ide'/>
       <address type='drive' controller='0' bus='0' target='0' unit='0'/>
     </disk>

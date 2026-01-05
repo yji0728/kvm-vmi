@@ -51,14 +51,14 @@
   ignore_errors: yes
 
 - name: define libvirt pool
-  command: virsh -c qemu:///system pool-define-as default --type dir --target /data/vms
+  command: virsh -c qemu:///system pool-define-as default --type dir --target /home/sec/vms
 
 - name: build libvirt pool
   command: virsh -c qemu:///system pool-build default
 
 - name: fix permissions on pool directory
   file:
-    path: /data/vms
+    path: /home/sec/vms
     state: directory
     owner: vagrant
     group: vagrant
