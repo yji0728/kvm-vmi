@@ -1,12 +1,12 @@
 ---
-- name: create /data
+- name: create /home/sec
   file:
-    path: /data
+    path: /home/sec
     state: directory
 
-- name: force ownership of /data to vagrant
+- name: force ownership of /home/sec to vagrant
   file:
-    path: /data
+    path: /home/sec
     state: directory
     owner: vagrant
     group: vagrant
@@ -54,7 +54,7 @@
 - name: upload templates
   synchronize:
     src: files/templates
-    dest: /data/
+    dest: /home/sec/
   become: false
 
 - name: fix permissions on kvm node
@@ -89,6 +89,17 @@
         checksum_url: "sha1:64c1c051efa70c902b0fd4b10c7d8da90215bbca",
       }
   when: enabled_vms['win7']
+
+- name: setup Windows 10
+  include_tasks: setup.yml
+  with_items:
+    - {
+        name: "win10",
+        ram: "4096",
+        packer_template: "windows_10.json",
+        packer_varfile: "windows_10.json",
+      }
+  when: enabled_vms['win10']
 
 - name: setup Ubuntu
   include_tasks: setup.yml
